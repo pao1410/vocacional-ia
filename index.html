@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VocacionalIA - Asistente DGETI</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col justify-between">
+
+    <!-- Header -->
+    <header class="bg-slate-800 border-b border-slate-700 py-4 px-6 shadow-md">
+        <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-2">
+            <div>
+                <span class="bg-blue-600 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider">SNCYT 2026</span>
+                <h1 class="text-xl font-bold mt-1 text-white">VocacionalIA - DGETI</h1>
+            </div>
+            <p class="text-sm text-slate-400">CETiS 131 | Metodologías Ágiles</p>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-3xl w-full mx-auto p-4 md:p-6 my-auto">
+        <div class="bg-slate-800 border border-slate-700 rounded-2xl shadow-xl p-6 md:p-8">
+            
+            <!-- Vista 1: Cuestionario -->
+            <div id="quiz-view">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-blue-400 mb-2">Asistente de Orientación Vocacional</h2>
+                    <p class="text-slate-300 text-sm">Responde con sinceridad para que la inteligencia artificial analice tus intereses y te recomiende la carrera técnica oficial de la DGETI ideal para ti, vinculada con los ODS.</p>
+                </div>
+
+                <form id="vocational-form" class="space-y-6">
+                    <!-- Pregunta 1 -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-200 mb-2">1. ¿Qué tipo de actividades disfrutas más en tu vida diaria?</label>
+                        <select id="p1" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm text-slate-100 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <option value="" disabled selected>Selecciona una opción...</option>
+                            <option value="tec">Resolver problemas técnicos, programar o reparar sistemas y circuitos.</option>
+                            <option value="salud">Ayudar a las personas, cuidar la salud o el bienestar social y gerontológico.</option>
+                            <option value="admin">Organizar empresas, administrar recursos, logística o comercio.</option>
+                            <option value="creativo">Diseñar, crear modas, arquitectura, artes gráficas o gastronomía.</option>
+                        </select>
+                    </div>
+
+                    <!-- Pregunta 2 -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-200 mb-2">2. ¿En qué entorno te visualizas trabajando en el futuro?</label>
+                        <select id="p2" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm text-slate-100 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <option value="" disabled selected>Selecciona una opción...</option>
+                            <option value="industrial">En plantas industriales, talleres de manufactura, robótica o mantenimiento.</option>
+                            <option value="servicios">En oficinas, hospitales, laboratorios clínicos, turismo o instituciones de servicio.</option>
+                            <option value="creativo_esp">En estudios de diseño, agencias de publicidad, medios de comunicación o talleres creativos.</option>
+                        </select>
+                    </div>
+
+                    <!-- Pregunta 3 -->
+                    <div>
+                        <label class="block text-sm font-medium text-slate-200 mb-2">3. ¿Qué Objetivo de Desarrollo Sostenible (ODS) te gustaría impulsar?</label>
+                        <select id="p3" required class="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm text-slate-100 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                            <option value="" disabled selected>Selecciona una opción...</option>
+                            <option value="ods4">ODS 4: Educación de calidad e inclusión tecnológica.</option>
+                            <option value="ods7">ODS 7 y 13: Energía asequible, fuentes alternas y acción por el clima.</option>
+                            <option value="ods9">ODS 9: Industria, innovación, automatización y infraestructura.</option>
+                            <option value="ods12">ODS 12: Producción y consumo responsables (Economía circular).</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 shadow-lg cursor-pointer">
+                        Ejecutar Análisis con IA Ética
+                    </button>
+                </form>
+            </div>
+
+            <!-- Vista 2: Resultado -->
+            <div id="result-view" class="hidden space-y-6">
+                <div class="border-b border-slate-700 pb-4">
+                    <span class="text-xs text-emerald-400 font-semibold tracking-wide uppercase">Análisis completado con éxito</span>
+                    <h2 class="text-2xl font-bold text-white mt-1">Tu Carrera Técnica DGETI Recomendada</h2>
+                </div>
+
+                <div class="bg-slate-900 p-5 rounded-xl border border-slate-700 space-y-3">
+                    <div>
+                        <span class="text-xs text-slate-400">Carrera Oficial:</span>
+                        <h3 id="res-nombre" class="text-xl font-bold text-blue-400"></h3>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 pt-2">
+                        <div>
+                            <span class="text-xs text-slate-400">Área:</span>
+                            <p id="res-area" class="text-sm font-medium text-slate-200"></p>
+                        </div>
+                        <div>
+                            <span class="text-xs text-slate-400">Campo:</span>
+                            <p id="res-campo" class="text-sm font-medium text-slate-200"></p>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-400">Plan de Estudios Oficial:</span>
+                        <p id="res-plan" class="text-sm font-mono text-emerald-400"></p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900/50 p-4 rounded-xl border border-slate-700/50 space-y-2">
+                    <h4 class="text-sm font-semibold text-slate-300">Vinculación con Propósito Ético y Sustentable:</h4>
+                    <p id="res-ods" class="text-sm text-slate-300"></p>
+                </div>
+
+                <button onclick="reiniciarApp()" class="w-full bg-slate-700 hover:bg-slate-600 text-white font-medium py-2.5 px-4 rounded-lg transition duration-200 cursor-pointer">
+                    Realizar otro análisis
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 text-xs text-slate-500 border-t border-slate-800">
+        VocacionalIA &bull; Semana Nacional de la Ciencia y la Tecnología 2026 &bull; DGETI
+    </footer>
+
+    <!-- Script de Lógica -->
+    <script>
+        // Base de datos oficial estricta basada en las carreras oficiales DGETI proporcionadas
+        const carrerasDGETI = [
+            { nombre: "SOPORTE Y MANTENIMIENTO DE EQUIPO DE CÓMPUTO", area: "F-M", campo: "Servicios", plan: "35170001-13 (PDF)", tipo: "tec", entorno: "industrial", ods: "ods9" },
+            { nombre: "PROGRAMACIÓN", area: "F-M", campo: "Servicios", plan: "32130005-13 (PDF)", tipo: "tec", entorno: "industrial", ods: "ods4" },
+            { nombre: "MECATRÓNICA", area: "F-M", campo: "Industrial", plan: "Plan DGETI", tipo: "tec", entorno: "industrial", ods: "ods9" },
+            { nombre: "ELECTRÓNICA", area: "F-M", campo: "Industrial", plan: "35130001-13 (PDF)", tipo: "tec", entorno: "industrial", ods: "ods9" },
+            { nombre: "ELECTRICIDAD", area: "F-M", campo: "Industrial", plan: "35120001-13 (PDF)", tipo: "tec", entorno: "industrial", ods: "ods7" },
+            { nombre: "FUENTES ALTERNAS DE ENERGÍA", area: "F-M", campo: "Industrial", plan: "35120002-13 (PDF)", tipo: "tec", entorno: "industrial", ods: "ods7" },
+            { nombre: "MANTENIMIENTO INDUSTRIAL", area: "F-M", campo: "Industrial", plan: "351100002-13 (PDF)", tipo: "tec", entorno: "industrial", ods: "ods12" },
+            { nombre: "LABORATORIO CLÍNICO", area: "Q-B", campo: "Servicios", plan: "37140001-13 (PDF)", tipo: "salud", entorno: "servicios", ods: "ods4" },
+            { nombre: "ENFERMERÍA GENERAL", area: "Q-B", campo: "Servicios", plan: "371200001-13 (PDF)", tipo: "salud", entorno: "servicios", ods: "ods4" },
+            { nombre: "LABORATORISTA QUÍMICO", area: "Q-B", campo: "Industrial", plan: "341100001-13 (PDF)", tipo: "salud", entorno: "industrial", ods: "ods12" },
+            { nombre: "ADMINISTRACIÓN DE RECURSOS HUMANOS", area: "E-A", campo: "Servicios", plan: "333502001-13 (PDF)", tipo: "admin", entorno: "servicios", ods: "ods4" },
+            { nombre: "LOGÍSTICA", area: "E-A", campo: "Servicios", plan: "333502003-13 (PDF)", tipo: "admin", entorno: "servicios", ods: "ods12" },
+            { nombre: "CONTABILIDAD", area: "E-A", campo: "Servicios", plan: "333400001-13 (PDF)", tipo: "admin", entorno: "servicios", ods: "ods4" },
+            { nombre: "OFIMÁTICA", area: "E-A", campo: "Servicios", plan: "344100001-13 (PDF)", tipo: "admin", entorno: "servicios", ods: "ods4" },
+            { nombre: "DISEÑO GRÁFICO DIGITAL", area: "F-M", campo: "Servicios", plan: "321300001-13 (PDF)", tipo: "creativo", entorno: "creativo_esp", ods: "ods4" },
+            { nombre: "DISEÑO DE MODAS", area: "F-M", campo: "Servicios", plan: "321400001-13 (PDF)", tipo: "creativo", entorno: "creativo_esp", ods: "ods12" },
+            { nombre: "ARQUITECTURA", area: "F-M", campo: "Servicios", plan: "353100001-13 (PDF)", tipo: "creativo", entorno: "creativo_esp", ods: "ods9" }
+        ];
+
+        document.getElementById('vocational-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const p1 = document.getElementById('p1').value;
+            const p2 = document.getElementById('p2').value;
+            const p3 = document.getElementById('p3').value;
+
+            // Filtrar y buscar coincidencia estricta en el catálogo DGETI
+            let encontrada = carrerasDGETI.find(c => c.tipo === p1 && c.entorno === p2 && c.ods === p3);
+            
+            // Si no hay coincidencia exacta, buscar por tipo e intereses generales
+            if (!encontrada) {
+                encontrada = carrerasDGETI.find(c => c.tipo === p1) || carrerasDGETI[0];
+            }
+
+            // Mostrar resultados en pantalla
+            document.getElementById('res-nombre').textContent = encontrada.nombre;
+            document.getElementById('res-area').textContent = encontrada.area;
+            document.getElementById('res-campo').textContent = encontrada.campo;
+            document.getElementById('res-plan').textContent = encontrada.plan;
+            document.getElementById('res-ods').textContent = `Esta opción se alinea perfectamente con tus intereses y promueve el desarrollo tecnológico ético y sustentable bajo los lineamientos oficiales de la DGETI.`;
+
+            // Transición de vistas
+            document.getElementById('quiz-view').classList.add('hidden');
+            document.getElementById('result-view').classList.remove('hidden');
+        });
+
+        function reiniciarApp() {
+            document.getElementById('vocational-form').reset();
+            document.getElementById('result-view').classList.add('hidden');
+            document.getElementById('quiz-view').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
